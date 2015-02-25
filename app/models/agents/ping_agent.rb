@@ -29,39 +29,35 @@ module Agents
     def check
       for i in 1..options['count'].to_i
         if Net::Ping::External.new(options['host']).ping
-          create_event(:payload => {"pingable" => true})
+          ping(true)
           pingable = true
           break
         end
       end
       if not pingable
-        create_event(:payload => {"pingable" => false})
+        ping(false)
       end
     end
 
     def ping_event(ping)
-      if (defined?(self.memory['last'])).nil?
+      if (defined?(memory['last'])).nil?
         options['mode'] = "all"
-        self.memory['last'] = ping
-        save!
+        memory['last'] = ping
       end
       if options['mode'] === "all"
         create_event(:payload => {"pingable" => ping})
-        self.memory['last'] = ping
-        save!
+        memory['last'] = ping
       else
         if ping
           if not memory['last']
-            create_event(:payload => {"pingable" => true})
-            self.memory['last'] = true
-            save!
+            create_event(:payload => {"pingable" => ping})
+            memory['last'] = ping
           end
         end
         if not ping
           if memory['last']
-            create_event(:payload => {"pingable" => false})
-            self.memory['last'] = false
-            save!
+            create_event(:payload => {"pingable" => ping})
+            memory['last'] = ping
           end
         end
       end

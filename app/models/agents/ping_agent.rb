@@ -45,6 +45,7 @@ module Agents
       end
       if options['mode'] === "all"
         create_event(:payload => {"pingable" => ping})
+        memory['last'] = ping
       else
         if ping
           if not memory['last']

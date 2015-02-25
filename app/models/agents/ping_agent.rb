@@ -23,9 +23,9 @@ module Agents
       errors.add(:base, 'count is required') unless options['count'].present?
     end
 
-    def check(host, count)
-      for i in 1..count
-        if Net::PingExternal.new(host).ping
+    def check
+      for i in 1..options['count']
+        if Net::PingExternal.new(options['host']).ping
           create_event(:payload => {"pingable" => true})
           pingable = true
           break

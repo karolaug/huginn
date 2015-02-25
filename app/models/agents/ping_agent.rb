@@ -45,18 +45,21 @@ module Agents
       end
       if options['mode'] === "all"
         create_event(:payload => {"pingable" => ping})
-        memory['last'] = ping
+        self.memory['last'] = ping
+        save!
       else
         if ping
           if not memory['last']
             create_event(:payload => {"pingable" => true})
-            memory['last'] = true
+            self.memory['last'] = true
+            save!
           end
         end
         if not ping
           if memory['last']
             create_event(:payload => {"pingable" => false})
-            memory['last'] = false
+            self.memory['last'] = false
+            save!
           end
         end
       end

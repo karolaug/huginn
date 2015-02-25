@@ -14,6 +14,7 @@ gem 'xmpp4r',  '~> 0.5.6'         # JabberAgent
 gem 'mqtt'                        # MQTTAgent
 gem 'slack-notifier', '~> 1.0.0'  # SlackAgent
 gem 'hypdf', '~> 1.0.7'           # PDFInfoAgent
+gem 'net-ping', '~> 1.7.1'        # PingAgent
 
 # GoogleCalendarPublishAgent
 gem "google-api-client", require: 'google/api_client'

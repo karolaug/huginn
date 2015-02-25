@@ -5,10 +5,6 @@ module Agents
     cannot_receive_events!
     default_schedule "every_5m"
 
-    if (defined?(memory['last'])).nil?
-      options['mode'] = "all"
-      memory['last'] = false
-    end
     
     description <<-MD
       Use this Agent to check if remote host is pingable.
@@ -44,6 +40,9 @@ module Agents
     end
 
     def ping_event(ping)
+      if (defined?(memory['last'])).nil?
+        options['mode'] = "all"
+      end
       if options['mode'] === "all"
         create_event(:payload => {"pingable" => ping})
       else

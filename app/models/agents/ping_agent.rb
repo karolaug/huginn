@@ -5,6 +5,9 @@ module Agents
     cannot_receive_events!
     default_schedule "every_5m"
 
+    if not memory['last']
+      options['mode'] = "all"
+    
     description <<-MD
       Use this Agent to check if remote host is pingable.
     MD
@@ -16,11 +19,13 @@ module Agents
         "host" => "127.0.0.1",
         "count" => '3',
         "expected_update_period_in_days" => '288'
+        "mode" => "on_change"
       }
     end
     def validate_options
       errors.add(:base, 'host is required') unless options['host'].present?
       errors.add(:base, 'count is required') unless options['count'].present?
+      errors.add(:base, "mode must be set to on_change or all") unless %w[on_change all].include?(options['mode'])
     end
 
     def check
@@ -36,6 +41,25 @@ module Agents
       end
     end
 
+    def ping_event(ping)
+      if options['mode'] === "all"
+        create_event(:payload => {"pingable" => ping})
+      else
+        if ping
+          if not memory['last']
+            create_event(:payload => {"pingable" => true})
+            memory['last'] = true
+          end
+        end
+        if not ping
+          if memory['last']
+            create_event(:payload => {"pingable" => false})
+            memory['last'] = false
+          end
+        end
+      end
+    end
+    
     def working?
       event_created_within?(interpolated['expected_update_period_in_days']) && !recent_error_logs?
     end

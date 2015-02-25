@@ -24,7 +24,7 @@ module Agents
     end
 
     def check
-      for i in 1..options['count']
+      for i in 1..options['count'].to_i
         if Net::PingExternal.new(options['host']).ping
           create_event(:payload => {"pingable" => true})
           pingable = true

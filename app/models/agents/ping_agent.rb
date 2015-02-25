@@ -25,7 +25,7 @@ module Agents
 
     def check
       for i in 1..options['count'].to_i
-        if Net::Ping::TCP.new(options['host']).ping
+        if Net::Ping::TCP.new("127.0.0.1").ping
           create_event(:payload => {"pingable" => true})
           pingable = true
           break

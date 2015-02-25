@@ -35,7 +35,7 @@ module Agents
         end
       end
       if not pingable
-        ping(false)
+        ping_event(false)
       end
     end
 

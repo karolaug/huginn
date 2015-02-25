@@ -5,8 +5,9 @@ module Agents
     cannot_receive_events!
     default_schedule "every_5m"
 
-    if not memory['last']
+    if (defined?(memory['last'])).nil?
       options['mode'] = "all"
+      memory['last'] = false
     end
     
     description <<-MD

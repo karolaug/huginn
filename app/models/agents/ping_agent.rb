@@ -1,3 +1,5 @@
+require 'net/ping'
+
 module Agents
   class PingAgent < Agent
     cannot_receive_events!

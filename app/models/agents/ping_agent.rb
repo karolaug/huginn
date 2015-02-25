@@ -7,6 +7,7 @@ module Agents
 
     if not memory['last']
       options['mode'] = "all"
+    end
     
     description <<-MD
       Use this Agent to check if remote host is pingable.
@@ -18,7 +19,7 @@ module Agents
       {
         "host" => "127.0.0.1",
         "count" => '3',
-        "expected_update_period_in_days" => '288'
+        "expected_update_period_in_days" => '288',
         "mode" => "on_change"
       }
     end

@@ -29,7 +29,7 @@ module Agents
     def check
       for i in 1..options['count'].to_i
         if Net::Ping::External.new(options['host']).ping
-          ping(true)
+          ping_event(true)
           pingable = true
           break
         end

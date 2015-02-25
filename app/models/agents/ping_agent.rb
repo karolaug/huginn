@@ -40,8 +40,10 @@ module Agents
     end
 
     def ping_event(ping)
-      if (defined?(memory['last'])).nil?
+      if (defined?(self.memory['last'])).nil?
         options['mode'] = "all"
+        self.memory['last'] = ping
+        save!
       end
       if options['mode'] === "all"
         create_event(:payload => {"pingable" => ping})

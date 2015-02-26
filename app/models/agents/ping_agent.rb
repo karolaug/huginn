@@ -19,6 +19,7 @@ module Agents
         "count" => '3',
         "expected_update_period_in_days" => '288',
         "mode" => "on_change"
+        "message_type" => "pressence"
       }
     end
     def validate_options
@@ -26,6 +27,8 @@ module Agents
       errors.add(:base, 'readable_name is required') unless options['readable_name'].present?
       errors.add(:base, 'count is required') unless options['count'].present?
       errors.add(:base, "mode must be set to on_change, all, on, or off") unless %w[on_change all].include?(options['mode'])
+      errors.add(:base, "message_type must be set to presence, status, reminder_on, or reminder_off") unless %w[presence status reminder_on reminder_off].include?(options['mode'])
+      
     end
 
     def check
@@ -86,12 +89,12 @@ module Agents
           presence = "left"
         end
         create_event :payload => {
-          "hostname" => options['host'],
-          "readable_name" => options['readable_name'],
-          "pingable" => ping,
-          "subject" => options['readable_name'] + 'Presence notification',
-          "message" => options['readable_name'] + 'has just' + presence
-        }
+                       "hostname" => options['host'],
+                       "readable_name" => options['readable_name'],
+                       "pingable" => ping,
+                       "subject" => options['readable_name'] + 'Presence notification',
+                       "message" => options['readable_name'] + 'has just' + presence
+                     }
       end
       if options['message_type'] === 'status'
         if ping
@@ -100,33 +103,43 @@ module Agents
           presence = "turned OFF"
         end
         create_event :payload => {
-          "hostname" => options['host'],
-          "readable_name" => options['readable_name'],
-          "pingable" => ping,
-          "subject" => options['readable_name'] + 'status notification',
-          "message" => options['readable_name'] + 'has just been' + presence
-        }
+                       "hostname" => options['host'],
+                       "readable_name" => options['readable_name'],
+                       "pingable" => ping,
+                       "subject" => options['readable_name'] + 'status notification',
+                       "message" => options['readable_name'] + 'has just been' + presence
+                     }
       end
-      if options['message_type'] === 'on_reminder'
+      if options['message_type'] === 'reminder_on'
         if ping
           presence = "ON"
-        else
-          presence = "OFF"
+          create_event :payload => {
+                         "hostname" => options['host'],
+                         "readable_name" => options['readable_name'],
+                         "pingable" => ping,
+                         "subject" => options['readable_name'] + 'status notification',
+                         "message" => options['readable_name'] + 'is still' + presence
+                       }
         end
-        create_event :payload => {
-          "hostname" => options['host'],
-          "readable_name" => options['readable_name'],
-          "pingable" => ping,
-          "subject" => options['readable_name'] + 'status notification',
-          "message" => options['readable_name'] + 'is still' + presence
-        }
       end
-      if options['message_type'] === "ping"
-        create_event :payload => {
-          "hostname" => options['host'],
-          "readable_name" => options['readable_name'],
-          "pingable" => ping,
-        }
+      if options['message_type'] === 'reminder_off'
+        if not ping
+          presence = "OFF"
+          create_event :payload => {
+                         "hostname" => options['host'],
+                         "readable_name" => options['readable_name'],
+                         "pingable" => ping,
+                         "subject" => options['readable_name'] + 'status notification',
+                         "message" => options['readable_name'] + 'is still' + presence
+                       }
+        end
+      end
+        if options['message_type'] === "ping"
+          create_event :payload => {
+                       "hostname" => options['host'],
+                       "readable_name" => options['readable_name'],
+                       "pingable" => ping,
+                     }
       end
     end
 

@@ -129,7 +129,7 @@ module Agents
         }
       end
       
-      create_event(:payload => msg)
+      create_event :payload => msg
     end
 
 

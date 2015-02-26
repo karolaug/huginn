@@ -92,8 +92,8 @@ module Agents
                        "hostname" => options['host'],
                        "readable_name" => options['readable_name'],
                        "pingable" => ping,
-                       "subject" => options['readable_name'] + 'Presence notification',
-                       "message" => options['readable_name'] + 'has just' + presence
+                       "subject" => options['readable_name'] + ' presence notification',
+                       "message" => options['readable_name'] + ' has just ' + presence
                      }
       end
       if options['message_type'] === 'status'
@@ -106,8 +106,8 @@ module Agents
                        "hostname" => options['host'],
                        "readable_name" => options['readable_name'],
                        "pingable" => ping,
-                       "subject" => options['readable_name'] + 'status notification',
-                       "message" => options['readable_name'] + 'has just been' + presence
+                       "subject" => options['readable_name'] + ' status notification',
+                       "message" => options['readable_name'] + ' has just been ' + presence
                      }
       end
       if options['message_type'] === 'reminder_on'
@@ -117,8 +117,8 @@ module Agents
                          "hostname" => options['host'],
                          "readable_name" => options['readable_name'],
                          "pingable" => ping,
-                         "subject" => options['readable_name'] + 'status notification',
-                         "message" => options['readable_name'] + 'is still' + presence
+                         "subject" => options['readable_name'] + ' status notification',
+                         "message" => options['readable_name'] + ' is still ' + presence
                        }
         end
       end
@@ -129,8 +129,8 @@ module Agents
                          "hostname" => options['host'],
                          "readable_name" => options['readable_name'],
                          "pingable" => ping,
-                         "subject" => options['readable_name'] + 'status notification',
-                         "message" => options['readable_name'] + 'is still' + presence
+                         "subject" => options['readable_name'] + ' status notification',
+                         "message" => options['readable_name'] + ' is still ' + presence
                        }
         end
       end

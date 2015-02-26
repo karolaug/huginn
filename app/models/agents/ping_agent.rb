@@ -82,6 +82,7 @@ module Agents
     end
 
     def send_event(ping)
+      dateTime = DateTime.now()
       if options['message_type'] === 'presence'
         if ping
           presence = "arrived"
@@ -93,8 +94,8 @@ module Agents
                        "readable_name" => options['readable_name'],
                        "pingable" => ping,
                        "subject" => options['readable_name'] + ' presence notification',
-                       "message" => options['readable_name'] + ' has just ' + presence,
-                       "dateTime" => DateTime.now()
+                       "message" => dateTime + ' ' + options['readable_name'] + ' has just ' + presence,
+                       "dateTime" => dateTime
                      }
       end
       if options['message_type'] === 'status'
@@ -108,8 +109,8 @@ module Agents
                        "readable_name" => options['readable_name'],
                        "pingable" => ping,
                        "subject" => options['readable_name'] + ' status notification',
-                       "message" => options['readable_name'] + ' has just been ' + presence,
-                       "dateTime" => DateTime.now()
+                       "message" => dateTime + ' ' + options['readable_name'] + ' has just been ' + presence,
+                       "dateTime" => dateTime
                      }
       end
       if options['message_type'] === 'reminder_on'
@@ -120,8 +121,8 @@ module Agents
                          "readable_name" => options['readable_name'],
                          "pingable" => ping,
                          "subject" => options['readable_name'] + ' status notification',
-                         "message" => options['readable_name'] + ' is still ' + presence,
-                         "dateTime" => DateTime.now()
+                         "message" => dateTime + ' ' + options['readable_name'] + ' is still ' + presence,
+                         "dateTime" => dateTime
                        }
         end
       end
@@ -133,8 +134,8 @@ module Agents
                          "readable_name" => options['readable_name'],
                          "pingable" => ping,
                          "subject" => options['readable_name'] + ' status notification',
-                         "message" => options['readable_name'] + ' is still ' + presence,
-                         "dateTime" => DateTime.now()
+                         "message" => dateTime + ' ' + options['readable_name'] + ' is still ' + presence,
+                         "dateTime" => dateTime
                        }
         end
       end
@@ -143,7 +144,7 @@ module Agents
                        "hostname" => options['host'],
                        "readable_name" => options['readable_name'],
                        "pingable" => ping,
-                       "dateTime" => DateTime.now()
+                       "dateTime" => dateTime
                      }
       end
     end

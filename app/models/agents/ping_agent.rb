@@ -15,7 +15,7 @@ module Agents
     def default_options
       {
         "host" => "127.0.0.1",
-        "name" => "localhost"
+        "name" => "localhost",
         "count" => '3',
         "expected_update_period_in_days" => '288',
         "mode" => "on_change"

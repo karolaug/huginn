@@ -1,10 +1,11 @@
 require 'net/ping'
+require 'date'
 
 module Agents
   class PingAgent < Agent
     cannot_receive_events!
     default_schedule "every_5m"
-
+    dateTime = DateTime.new()
     
     description <<-MD
       Use this Agent to check if remote host is pingable and generate msg events.
@@ -93,7 +94,8 @@ module Agents
                        "readable_name" => options['readable_name'],
                        "pingable" => ping,
                        "subject" => options['readable_name'] + ' presence notification',
-                       "message" => options['readable_name'] + ' has just ' + presence
+                       "message" => options['readable_name'] + ' has just ' + presence,
+                       "dateTime" => dateTime
                      }
       end
       if options['message_type'] === 'status'
@@ -107,7 +109,8 @@ module Agents
                        "readable_name" => options['readable_name'],
                        "pingable" => ping,
                        "subject" => options['readable_name'] + ' status notification',
-                       "message" => options['readable_name'] + ' has just been ' + presence
+                       "message" => options['readable_name'] + ' has just been ' + presence,
+                       "dateTime" => dateTime
                      }
       end
       if options['message_type'] === 'reminder_on'
@@ -118,7 +121,8 @@ module Agents
                          "readable_name" => options['readable_name'],
                          "pingable" => ping,
                          "subject" => options['readable_name'] + ' status notification',
-                         "message" => options['readable_name'] + ' is still ' + presence
+                         "message" => options['readable_name'] + ' is still ' + presence,
+                         "dateTime" => dateTime
                        }
         end
       end
@@ -130,7 +134,8 @@ module Agents
                          "readable_name" => options['readable_name'],
                          "pingable" => ping,
                          "subject" => options['readable_name'] + ' status notification',
-                         "message" => options['readable_name'] + ' is still ' + presence
+                         "message" => options['readable_name'] + ' is still ' + presence,
+                         "dateTime" => dateTime
                        }
         end
       end
@@ -139,6 +144,7 @@ module Agents
                        "hostname" => options['host'],
                        "readable_name" => options['readable_name'],
                        "pingable" => ping,
+                       "dateTime" => dateTime
                      }
       end
     end

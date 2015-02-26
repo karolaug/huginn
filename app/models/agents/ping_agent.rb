@@ -7,7 +7,7 @@ module Agents
 
     
     description <<-MD
-      Use this Agent to check if remote host is pingable.
+      Use this Agent to check if remote host is pingable and generate msg events.
     MD
 
     event_description "Ping result"
@@ -25,7 +25,7 @@ module Agents
       errors.add(:base, 'host is required') unless options['host'].present?
       errors.add(:base, 'readable_name is required') unless options['readable_name'].present?
       errors.add(:base, 'count is required') unless options['count'].present?
-      errors.add(:base, "mode must be set to on_change or all") unless %w[on_change all].include?(options['mode'])
+      errors.add(:base, "mode must be set to on_change, all, on, or off") unless %w[on_change all].include?(options['mode'])
     end
 
     def check
@@ -34,6 +34,8 @@ module Agents
           ping_event(true)
           pingable = true
           break
+        else
+          pingable = false
         end
       end
       if not pingable
@@ -47,23 +49,90 @@ module Agents
         memory['last'] = ping
       end
       if options['mode'] === "all"
-        create_event(:payload => {"readable_name" => options['readable_name'], "pingable" => ping})
+        send_event(ping)
         memory['last'] = ping
-      else
+      end
+      if options['mode'] === "on_change"
         if ping
           if not memory['last']
-            create_event(:payload => {"readable_name" => options['readable_name'], "pingable" => ping})
+            send_event(ping)
             memory['last'] = ping
           end
         end
         if not ping
           if memory['last']
-            create_event(:payload => {"readable_name" => options['readable_name'], "pingable" => ping})
+            send_event(ping)
             memory['last'] = ping
           end
         end
       end
+      if options['mode'] === "on"
+        if ping
+          send_event(ping)
+        end
+      end
+      if options['mode'] === "off"
+        if not ping
+          send_event(ping)
+        end
+      end
     end
+
+    def send_event(ping)
+      if options['message_type'] === 'presence'
+        if ping
+          presence = "entered"
+        else
+          presence = "left"
+        end
+        msg = {
+          "hostname" => options['host'],
+          "readable_name" => options['readable_name'],
+          "pingable" => ping,
+          "subject" => options['readable_name'] + 'Presence notification',
+          "message" => options['readable_name'] + 'has just' + presence
+        }
+      end
+      if options['message_type'] === 'status'
+        if ping
+          presence = "turned ON"
+        else
+          presence = "turned OFF"
+        end
+        msg = {
+          "hostname" => options['host'],
+          "readable_name" => options['readable_name'],
+          "pingable" => ping,
+          "subject" => options['readable_name'] + 'status notification',
+          "message" => options['readable_name'] + 'has just been' + presence
+        }
+      end
+      if options['message_type'] === 'on_reminder'
+        if ping
+          presence = "ON"
+        else
+          presence = "OFF"
+        end
+        msg = {
+          "hostname" => options['host'],
+          "readable_name" => options['readable_name'],
+          "pingable" => ping,
+          "subject" => options['readable_name'] + 'status notification',
+          "message" => options['readable_name'] + 'is still' + presence
+        }
+      end
+      if options['message_type'] === "ping"
+        msg = {
+          "hostname" => options['host'],
+          "readable_name" => options['readable_name'],
+          "pingable" => ping,
+        }
+      end
+      
+      create_event(:payload => msg)
+    end
+
+
     
     def working?
       event_created_within?(interpolated['expected_update_period_in_days']) && !recent_error_logs?

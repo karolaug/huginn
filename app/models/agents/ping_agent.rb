@@ -85,7 +85,7 @@ module Agents
         else
           presence = "left"
         end
-        msg = {
+        create_event :payload => {
           "hostname" => options['host'],
           "readable_name" => options['readable_name'],
           "pingable" => ping,
@@ -99,7 +99,7 @@ module Agents
         else
           presence = "turned OFF"
         end
-        msg = {
+        create_event :payload => {
           "hostname" => options['host'],
           "readable_name" => options['readable_name'],
           "pingable" => ping,
@@ -113,7 +113,7 @@ module Agents
         else
           presence = "OFF"
         end
-        msg = {
+        create_event :payload => {
           "hostname" => options['host'],
           "readable_name" => options['readable_name'],
           "pingable" => ping,
@@ -122,14 +122,12 @@ module Agents
         }
       end
       if options['message_type'] === "ping"
-        msg = {
+        create_event :payload => {
           "hostname" => options['host'],
           "readable_name" => options['readable_name'],
           "pingable" => ping,
         }
       end
-      
-      create_event :payload => msg
     end
 
 

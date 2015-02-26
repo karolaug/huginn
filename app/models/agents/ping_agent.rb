@@ -18,8 +18,8 @@ module Agents
         "readable_name" => "localhost",
         "count" => '3',
         "expected_update_period_in_days" => '288',
-        "mode" => "on_change"
-        "message_type" => "pressence"
+        "mode" => "on_change",
+        "message_type" => "presence"
       }
     end
     def validate_options

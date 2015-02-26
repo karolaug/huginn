@@ -5,7 +5,6 @@ module Agents
   class PingAgent < Agent
     cannot_receive_events!
     default_schedule "every_5m"
-    dateTime = DateTime.new()
     
     description <<-MD
       Use this Agent to check if remote host is pingable and generate msg events.
@@ -95,7 +94,7 @@ module Agents
                        "pingable" => ping,
                        "subject" => options['readable_name'] + ' presence notification',
                        "message" => options['readable_name'] + ' has just ' + presence,
-                       "dateTime" => dateTime
+                       "dateTime" => DateTime.now()
                      }
       end
       if options['message_type'] === 'status'
@@ -110,7 +109,7 @@ module Agents
                        "pingable" => ping,
                        "subject" => options['readable_name'] + ' status notification',
                        "message" => options['readable_name'] + ' has just been ' + presence,
-                       "dateTime" => dateTime
+                       "dateTime" => DateTime.now()
                      }
       end
       if options['message_type'] === 'reminder_on'
@@ -122,7 +121,7 @@ module Agents
                          "pingable" => ping,
                          "subject" => options['readable_name'] + ' status notification',
                          "message" => options['readable_name'] + ' is still ' + presence,
-                         "dateTime" => dateTime
+                         "dateTime" => DateTime.now()
                        }
         end
       end
@@ -135,7 +134,7 @@ module Agents
                          "pingable" => ping,
                          "subject" => options['readable_name'] + ' status notification',
                          "message" => options['readable_name'] + ' is still ' + presence,
-                         "dateTime" => dateTime
+                         "dateTime" => DateTime.now()
                        }
         end
       end
@@ -144,7 +143,7 @@ module Agents
                        "hostname" => options['host'],
                        "readable_name" => options['readable_name'],
                        "pingable" => ping,
-                       "dateTime" => dateTime
+                       "dateTime" => DateTime.now()
                      }
       end
     end

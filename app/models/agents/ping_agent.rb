@@ -83,6 +83,7 @@ module Agents
 
     def send_event(ping)
       dateTime = DateTime.now()
+      dateTime = dateTime.to_s
       if options['message_type'] === 'presence'
         if ping
           presence = "arrived"

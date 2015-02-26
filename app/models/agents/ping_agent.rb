@@ -47,18 +47,18 @@ module Agents
         memory['last'] = ping
       end
       if options['mode'] === "all"
-        create_event(:payload => {"pingable" => ping, "readable_name" => options['readable_name']})
+        create_event(:payload => {"readable_name" => options['readable_name'], "pingable" => ping})
         memory['last'] = ping
       else
         if ping
           if not memory['last']
-            create_event(:payload => {"pingable" => ping, "readable_name" => options['readable_name']})
+            create_event(:payload => {"readable_name" => options['readable_name'], "pingable" => ping})
             memory['last'] = ping
           end
         end
         if not ping
           if memory['last']
-            create_event(:payload => {"pingable" => ping, "readable_name" => options['readable_name']})
+            create_event(:payload => {"readable_name" => options['readable_name'], "pingable" => ping})
             memory['last'] = ping
           end
         end

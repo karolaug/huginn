@@ -27,7 +27,7 @@ module Agents
       errors.add(:base, 'readable_name is required') unless options['readable_name'].present?
       errors.add(:base, 'count is required') unless options['count'].present?
       errors.add(:base, "mode must be set to on_change, all, on, or off") unless %w[on_change all].include?(options['mode'])
-      errors.add(:base, "message_type must be set to presence, status, reminder_on, or reminder_off") unless %w[presence status reminder_on reminder_off].include?(options['message_type'])
+      errors.add(:base, "message_type must be set to presence, status, reminder_on reminder_off or ping") unless %w[presence status reminder_on reminder_off ping].include?(options['message_type'])
       
     end
 

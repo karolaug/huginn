@@ -23,7 +23,7 @@ module Agents
     end
     def validate_options
       errors.add(:base, 'host is required') unless options['host'].present?
-      errors.add(:base, 'name is required') unless options['readable_name'].present?
+      errors.add(:base, 'readable_name is required') unless options['readable_name'].present?
       errors.add(:base, 'count is required') unless options['count'].present?
       errors.add(:base, "mode must be set to on_change or all") unless %w[on_change all].include?(options['mode'])
     end
@@ -47,18 +47,18 @@ module Agents
         memory['last'] = ping
       end
       if options['mode'] === "all"
-        create_event(:payload => {"pingable" => ping, name => options['readable_name']})
+        create_event(:payload => {"pingable" => ping, "readable_name" => options['readable_name']})
         memory['last'] = ping
       else
         if ping
           if not memory['last']
-            create_event(:payload => {"pingable" => ping, name => options['readable_name']})
+            create_event(:payload => {"pingable" => ping, "readable_name" => options['readable_name']})
             memory['last'] = ping
           end
         end
         if not ping
           if memory['last']
-            create_event(:payload => {"pingable" => ping, name => options['readable_name']})
+            create_event(:payload => {"pingable" => ping, "readable_name" => options['readable_name']})
             memory['last'] = ping
           end
         end

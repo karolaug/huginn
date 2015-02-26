@@ -84,7 +84,7 @@ module Agents
     def send_event(ping)
       if options['message_type'] === 'presence'
         if ping
-          presence = "entered"
+          presence = "arrived"
         else
           presence = "left"
         end

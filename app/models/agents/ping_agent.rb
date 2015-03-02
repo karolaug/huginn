@@ -122,7 +122,7 @@ module Agents
                          "readable_name" => options['readable_name'],
                          "pingable" => ping,
                          "subject" => options['readable_name'] + ' status notification',
-                         "message" => dateTime + ' ' + options['readable_name'] + ' is still ' + presence,
+                         "message" => dateTime + ' ' + options['readable_name'] + ' is ' + presence,
                          "dateTime" => dateTime
                        }
         end
@@ -135,7 +135,7 @@ module Agents
                          "readable_name" => options['readable_name'],
                          "pingable" => ping,
                          "subject" => options['readable_name'] + ' status notification',
-                         "message" => dateTime + ' ' + options['readable_name'] + ' is still ' + presence,
+                         "message" => dateTime + ' ' + options['readable_name'] + ' is ' + presence,
                          "dateTime" => dateTime
                        }
         end

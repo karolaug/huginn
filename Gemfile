@@ -15,7 +15,7 @@ gem 'mqtt'                        # MQTTAgent
 gem 'slack-notifier', '~> 1.0.0'  # SlackAgent
 gem 'hypdf', '~> 1.0.7'           # PDFInfoAgent
 gem 'net-ping', '~> 1.7.1'        # PingAgent
-gem 'ruby-notify-my-android' '~> 0.4.3' #NMA Agent
+gem 'ruby-notify-my-android', '~> 0.4.3' #NMA Agent
 
 # GoogleCalendarPublishAgent
 gem "google-api-client", require: 'google/api_client'

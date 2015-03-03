@@ -13,8 +13,8 @@ module Agents
     def default_options
       {
           'expected_receive_period_in_days' => "2",
-          'msg' => 'Your message',
-          'api' => 'abc'
+          'body' => 'Your message',
+          'apikey' => 'abc'
       }
     end
 
@@ -22,11 +22,11 @@ module Agents
       incoming_events.each do |event|
         log "Sending notificaction with event #{event.id}"
         NMA.notify do |n|
-          n.apikey = options['api']
+          n.apikey = options['apikey']
           n.priority = NMA::Priority::MODERATE
           n.application = "Huginn"
           n.event = "Notification"
-          n.description = interpolated(event)['msg']
+          n.description = interpolated(event)['body']
         end
       end
     end

@@ -13,7 +13,8 @@ module Agents
     def default_options
       {
           'expected_receive_period_in_days' => "2",
-          'body' => 'Your message',
+          'body' => '{{message}}',
+          'title' => '{{subject}}',
           'apikey' => 'abc'
       }
     end
@@ -34,7 +35,7 @@ module Agents
           n.apikey = options['apikey']
           n.priority = NMA::Priority::MODERATE
           n.application = "Huginn"
-          n.event = "Notification"
+          n.event = interpolated(event)['title']
           n.description = interpolated(event)['body']
         end
       end

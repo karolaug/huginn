@@ -95,7 +95,7 @@ module Agents
                        "readable_name" => options['readable_name'],
                        "pingable" => ping,
                        "subject" => options['readable_name'] + ' presence notification',
-                       "message" => dateTime + ' ' + options['readable_name'] + ' has just ' + presence,
+                       "message" => options['readable_name'] + ' has just ' + presence,
                        "dateTime" => dateTime
                      }
       end
@@ -110,7 +110,7 @@ module Agents
                        "readable_name" => options['readable_name'],
                        "pingable" => ping,
                        "subject" => options['readable_name'] + ' status notification',
-                       "message" => dateTime + ' ' + options['readable_name'] + ' has just been ' + presence,
+                       "message" => options['readable_name'] + ' has just been ' + presence,
                        "dateTime" => dateTime
                      }
       end
@@ -122,7 +122,7 @@ module Agents
                          "readable_name" => options['readable_name'],
                          "pingable" => ping,
                          "subject" => options['readable_name'] + ' status notification',
-                         "message" => dateTime + ' ' + options['readable_name'] + ' is ' + presence,
+                         "message" => options['readable_name'] + ' is ' + presence,
                          "dateTime" => dateTime
                        }
         end
@@ -135,7 +135,7 @@ module Agents
                          "readable_name" => options['readable_name'],
                          "pingable" => ping,
                          "subject" => options['readable_name'] + ' status notification',
-                         "message" => dateTime + ' ' + options['readable_name'] + ' is ' + presence,
+                         "message" => options['readable_name'] + ' is ' + presence,
                          "dateTime" => dateTime
                        }
         end

@@ -1,7 +1,7 @@
 require 'ruby-notify-my-android'
 
 module Agents
-  class NMAAgent < Agent
+  class NmaAgent < Agent
 
     cannot_be_scheduled!
     cannot_create_events!

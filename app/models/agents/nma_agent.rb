@@ -18,6 +18,15 @@ module Agents
       }
     end
 
+    def working?
+      true
+    end
+
+    def validate_options
+    end
+    
+
+
     def receive(incoming_events)
       incoming_events.each do |event|
         log "Sending notificaction with event #{event.id}"

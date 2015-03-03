@@ -13,7 +13,7 @@ module Agents
     def default_options
       {
           'expected_receive_period_in_days' => "2"
-          'body' => '{{message}}'
+          'body' => 'Your notification'
       }
     end
 
